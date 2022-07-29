@@ -1,0 +1,268 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body-ext {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute ;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+}
+
+body {
+    background: #171717;
+    margin: 0;
+    height: 100vh;
+
+
+    &::before {
+        @extend body-ext;
+        background: linear-gradient(to right, #5433ff, #20bdff, #a5fecb);
+        clip-path: circle(12% at 25% 15%);
+    }
+    &::after {
+        @extend body-ext;
+        background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+        clip-path: circle(20% at 78% 67%);
+    }
+
+}
+
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.holder {
+    width: 50%;
+    height: 70%;
+    border: 1px solid rgba(255,255,255,.5);
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5%;
+    overflow: hidden;
+}
+
+.inputs {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+inps-size {
+    font-size: 22px;
+    padding: 5px;
+
+}
+
+#text {
+    @extend inps-size;
+    width: 75%;
+    background: none;
+    border: 2px solid white;
+    border-radius: 10px 0 0 10px;
+    color: white;
+    outline: none;
+
+    &::placeholder {
+        color: rgba(255,255,255,.5);
+    }
+
+}
+
+btns-ext {
+    border: none;
+    padding: 7px;
+    cursor: pointer;
+
+}
+
+.add {
+    @extend inps-size;
+    @extend btns-ext;
+    align-items: center;
+    border-radius: 0 10px 10px 0;
+    transition: background 100ms ease-in-out;
+    background: white;
+
+    &:hover {
+        background: pink;
+    }
+
+}
+
+.clear {
+    @extend inps-size;
+    @extend btns-ext;
+    border-radius: 10px;
+    transition: background 100ms ease-in-out, color 50ms ease-in-out;
+    background: transparent;
+    color: #B40000;
+    border: 2px solid #B40000;
+    padding: 5px;
+
+    &:hover {
+        background: #B40000;
+        color: white;
+    }
+}
+
+svg {
+    vertical-align: middle;
+}
+
+.todolist {
+    width: 100%;
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 2.5%;
+    overflow-y: overlay;
+    padding: 3% 0;
+
+    &::-webkit-scrollbar {
+        width: 7px;
+    }
+  
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,.7);
+        border-radius: 100px;
+    }
+        
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgba(0,0,0,.5);
+    }
+
+}
+
+.todo {
+    width: 90%;
+    height: max-content;
+    padding: 4% 2%;
+    background: rgba(255,255,255,.9);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    gap: 2%;
+
+    .checkbox {
+        appearance: none;
+        width: 2em;
+        aspect-ratio: 1/1;
+        border-radius: 3px;
+        background: rgba(0,0,0,.1);
+        $accent: #00578B;
+        border: 2px solid $accent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1px;
+        transition: background 100ms ease-in-out;
+        cursor: pointer;
+
+        &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-image: url(../img/xmark.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        &:after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-image: url(../img/check.svg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: none;
+        }
+
+        &:checked {
+            background: $accent;
+        }
+
+        &:checked:before {
+            display: none;
+        }
+
+        &:checked:after {
+            display: block;
+        }
+
+        &:checked + .todotxt {
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+    }
+}
+
+.notodos {
+    font: {
+        size: 30px;
+        family: sans-serif;
+        weight: bold;
+    }
+    color: rgba(0,0,0,.5);
+    text-transform: uppercase;
+}
+
+
+//RESPONSIVE
+
+@media (max-width: 768px) {
+    .holder {
+        width: 85%;
+    }
+}
+
+@media (max-width: 425px) {
+    .holder {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    inps-size {
+        font-size: 18px;
+    }
+
+    #text {
+        width: 60%;
+    }
+
+    .todo {
+        border-radius: 10px;
+        padding: 4% 4%;
+        gap: 5%;
+    }
+
+}
